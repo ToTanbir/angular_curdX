@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Angular_curd</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+
+  </head>
+  <body ng-app="myApp" ng-controller="myController">
+    <div class="container">
+      <hr>
+      <button type="button" class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#myModal">Add Student</button>
+
+      <h2>All Student</h2>
+      <input type="text" placeholder="Search..." ng-model="search">
+      <span class="clearfix"></span>
+      <hr>
+
+      <div class="alert alert-success" ng-if="alert">
+        <a href="#" class="close" ng-click="clearalert()">&times;</a>
+        {{alert}}
+      </div>
+       <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Sl.No</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Roll</th>
+        <th>Date Of Birth</th>
+        <th>Phone</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="student in students | filter:search">
+        <td>{{$index+1}}</td>
+        <td>{{student.name}}</td>
+        <td>{{student.address}}</td>
+        <td>{{student.roll}}</td>
+        <td>{{student.date}}</td>
+        <td>{{student.mobile}}</td>
+        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalEdit" ng-click="selectUser(student)">Edit</button></td>
+        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDelete" ng-click="selectUser(students)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">New Student Registration</h4>
+        </div>
+        <div class="modal-body">
+            
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label class="control-label col-sm-2">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Name" required="" class="form-control" ng-model="newUser.name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Address</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Address" required="" class="form-control" ng-model="newUser.address">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Roll</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Roll" required="" class="form-control" ng-model="newUser.roll">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Deth of birth</label>
+                <div class="col-sm-10">
+                  <input id="demoDate" type="text" required="" placeholder="Select Date" class="form-control" ng-model="newUser.date">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Phone</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Phone" required="" class="form-control" ng-model="newUser.mobile">
+                </div>
+              </div>
+
+              
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default"data-dismiss="modal" ng-click="saveUser()">Save</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModalEdit" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit This User</h4>
+        </div>
+        <div class="modal-body">
+            
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label class="control-label col-sm-2">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Name" required="" class="form-control" ng-model="clickedUser.name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Address</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Address" required="" class="form-control"ng-model="clickedUser.address">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Roll</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Roll" required="" class="form-control"ng-model="clickedUser.roll">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Deth of birth</label>
+                <div class="col-sm-10">
+                  <input id="demoDate" type="text" required="" placeholder="Select Date" class="form-control"ng-model="clickedUser.date">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2">Phone</label>
+                <div class="col-sm-10">
+                  <input type="text" placeholder="Phone" required="" class="form-control"ng-model="clickedUser.mobile">
+                </div>
+              </div>
+
+              
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" ng-click="updateUser()"data-dismiss="modal">Save</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModalDelete" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Are You Sure...</h4>
+        </div>
+        <div class="modal-body">
+            <strong style="color: red;">
+              You are going to delete All information....
+            </strong>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteUser()">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+      $('#sl').click(function(){
+        $('#tl').loadingBtn();
+        $('#tb').loadingBtn({ text : "Signing In"});
+      });
+      
+      $('#el').click(function(){
+        $('#tl').loadingBtnComplete();
+        $('#tb').loadingBtnComplete({ html : "Sign In"});
+      });
+      
+      $('#demoDate').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        todayHighlight: true
+      });
+      
+      $('#demoSelect').select2();
+    </script>
+  </body>
+</html>
